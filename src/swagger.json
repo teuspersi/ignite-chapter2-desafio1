@@ -1,0 +1,216 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "UserApp Documentation",
+    "description": "This is an users API",
+    "version": "1.0.0",
+    "contact": {
+      "email": "teuspersi@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Sample name",
+                  "email": "sample@mail.com.br"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "example": {
+                  "type": "array",
+                  "id": "1e5bbbae-e778-4ddb-80a8-9bcfecb0fa0f",
+                  "admin": "true",
+                  "name": "Sample name",
+                  "email": "sample@mail.com.br",
+                  "created_at": "2021-07-16T18:53:44.715Z",
+                  "updated_at": "2021-07-16T18:53:44.715Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email is already taken",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Email is already taken"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "List all users",
+        "description": "List all users",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "required": "true",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "1e5bbbae-e778-4ddb-80a8-9bcfecb0fa0f",
+                    "admin": "false",
+                    "name": "Sample name",
+                    "email": "sample@mail.com.br",
+                    "created_at": "2021-07-16T18:53:44.715Z",
+                    "updated_at": "2021-07-16T18:53:44.715Z"
+                  },
+                  {
+                    "id": "1e5bbbae-e778-4ddb-80a8-9bcfecb0fa0f",
+                    "admin": "true",
+                    "name": "Sample name 2",
+                    "email": "sample@mail.com.br",
+                    "created_at": "2021-07-16T18:53:44.715Z",
+                    "updated_at": "2021-07-16T18:53:44.715Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "User does not exist or user is not an admin",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "User does not exists"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Return a specific user",
+        "description": "Return a specific user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": "true",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "1e5bbbae-e778-4ddb-80a8-9bcfecb0fa0f",
+                    "admin": "false",
+                    "name": "Sample name",
+                    "email": "sample@mail.com.br",
+                    "created_at": "2021-07-16T18:53:44.715Z",
+                    "updated_at": "2021-07-16T18:53:44.715Z"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "User not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Make admin",
+        "description": "Make a user become an admin",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": "true",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "admin": "true",
+                    "id": "1e5bbbae-e778-4ddb-80a8-9bcfecb0fa0f",
+                    "name": "Sample name",
+                    "email": "sample@mail.com.br",
+                    "created_at": "2021-07-16T18:53:44.715Z",
+                    "updated_at": "2021-07-16T18:53:44.715Z"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "User not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

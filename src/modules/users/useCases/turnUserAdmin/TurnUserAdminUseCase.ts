@@ -14,7 +14,7 @@ class TurnUserAdminUseCase {
     console.log(user_id);
 
     if (!user) {
-      throw new Error("User does not exist");
+      throw new Error("User not found");
     }
 
     const updatedUser = this.usersRepository.turnAdmin(user);
